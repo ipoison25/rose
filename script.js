@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getLyricsLineDuration() {
         const total = bgMusic.duration && isFinite(bgMusic.duration) ? bgMusic.duration : 240;
-        return Math.max(1, (total - LYRICS_INTRO_DELAY) / LYRICS.length);
+        return Math.max(1, (total - LYRICS_INTRO_DELAY) / LYRICS.length) * 1.1;
     }
 
     function updateLyrics() {
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             endText.classList.add('visible');
             lyricsPanel.classList.add('visible');
-        }, 4600);
+        }, 2000);
     }
 
     function delay(ms) {
