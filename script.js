@@ -121,29 +121,24 @@ document.addEventListener('DOMContentLoaded', () => {
     lyricsNextEl.textContent = LYRICS[0];
 
     const PETAL_LAYERS = [
-        { count: 4, w: 24, h: 46, curl: 78, delayBase: 0, tz: 2, cls: 'petal-bud' },
-        { count: 5, w: 34, h: 58, curl: 65, delayBase: 0.25, tz: 9, cls: 'petal-core' },
-        { count: 6, w: 46, h: 72, curl: 48, delayBase: 0.55, tz: 18, cls: 'petal-inner' },
-        { count: 7, w: 58, h: 88, curl: 22, delayBase: 0.90, tz: 30, cls: 'petal-mid-inner' },
-        { count: 8, w: 72, h: 104, curl: -5, delayBase: 1.30, tz: 44, cls: 'petal-mid' },
-        { count: 9, w: 86, h: 118, curl: -25, delayBase: 1.75, tz: 60, cls: 'petal-outer' },
-        { count: 10, w: 98, h: 130, curl: -48, delayBase: 2.25, tz: 76, cls: 'petal-blush' },
+        { count: 11, w: 24, h: 86, delayBase: 0, angleOffset: 16, scaleFinal: 0.82, cls: 'petal-inner' },
+        { count: 12, w: 30, h: 122, delayBase: 0.2, angleOffset: 0, scaleFinal: 1, cls: 'petal-blush' },
     ];
 
     const SEPALS_COUNT = 5;
 
     const FALLING_PETAL_COLORS = [
-        ['#9a001d', '#3d0008'],
-        ['#850018', '#2b0005'],
-        ['#ad0022', '#480008'],
-        ['#bf0028', '#52000c'],
+        ['#ffcb1f', '#a3690a'],
+        ['#ffd83d', '#95530a'],
+        ['#f5bc0a', '#875600'],
+        ['#ffe066', '#b3740f'],
     ];
 
     let fallingPetalInterval = null;
 
 
     function startCardLoader() {
-        const duration = 2400;
+        const duration = 900;
         const steps = [
             { threshold: 20, text: 'جارٍ تحميل Love.css...' },
             { threshold: 50, text: 'تنمو البتلات الرقمية...' },
@@ -180,38 +175,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const sepal = document.createElement('div');
             sepal.className = 'sepal';
             const angle = i * step + (Math.random() - 0.5) * 5;
-            const delay = 0.3 + i * 0.06;
-            const curl = 18 + Math.random() * 8;
+            const delay = 0.15 + i * 0.04;
 
             sepal.style.setProperty('--sepal-angle', `${angle}deg`);
-            sepal.style.setProperty('--sepal-curl', `${curl}deg`);
             sepal.style.setProperty('--sepal-delay', `${delay}s`);
             calyx.appendChild(sepal);
         }
     }
 
     function createPetals() {
-        PETAL_LAYERS.forEach((layer, li) => {
+        PETAL_LAYERS.forEach((layer) => {
             const angleStep = 360 / layer.count;
-            const layerOffset = li * 24 + (Math.random() - 0.5) * 8;
 
             for (let i = 0; i < layer.count; i++) {
                 const petal = document.createElement('div');
                 petal.className = `petal ${layer.cls}`;
 
-                const angle = layerOffset + i * angleStep + (Math.random() - 0.5) * 5;
-                const delay = layer.delayBase + i * 0.05;
-                const curlJitter = (Math.random() - 0.5) * 6;
-                const scaleJitter = 0.94 + Math.random() * 0.12;
-                const bloomDur = 2.1 + Math.random() * 0.4;
+                const angle = layer.angleOffset + i * angleStep + (Math.random() - 0.5) * 3;
+                const delay = layer.delayBase + i * 0.035;
+                const scaleJitter = layer.scaleFinal + (Math.random() - 0.5) * 0.08;
+                const bloomDur = 0.7 + Math.random() * 0.3;
 
                 petal.style.width = `${layer.w}px`;
                 petal.style.height = `${layer.h}px`;
                 petal.style.setProperty('--angle', `${angle}deg`);
-                petal.style.setProperty('--curl', `${layer.curl + curlJitter}deg`);
                 petal.style.setProperty('--scale', scaleJitter);
                 petal.style.setProperty('--delay', `${delay}s`);
-                petal.style.setProperty('--tz', `${layer.tz}px`);
                 petal.style.setProperty('--bloom-dur', `${bloomDur}s`);
 
                 roseHead.appendChild(petal);
@@ -327,6 +316,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
         startCardLoader();
-    }, 400);
+    }, 100);
 
 });
